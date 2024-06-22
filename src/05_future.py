@@ -33,7 +33,9 @@ async def big_database_thing(future: asyncio.Future):
 
 async def main():
     # Create a basic Future
-    future = asyncio.Future()
+    # Although `future = Future()` works just fine,
+    # `create_future` allows other async loop implementations to provide optimized 'await' systems.
+    future = asyncio.get_running_loop().create_future()
     # Put the 'future' in another coroutine.
     coro = big_database_thing(future)
     # Let the coroutine run in the background.
